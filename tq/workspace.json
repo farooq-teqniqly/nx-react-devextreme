@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "projects": {
+    "react-dx": {
+      "root": "apps/react-dx",
+      "sourceRoot": "apps/react-dx/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/react-dx",
+            "index": "apps/react-dx/src/index.html",
+            "main": "apps/react-dx/src/main.tsx",
+            "polyfills": "apps/react-dx/src/polyfills.ts",
+            "tsConfig": "apps/react-dx/tsconfig.app.json",
+            "assets": [
+              "apps/react-dx/src/favicon.ico",
+              "apps/react-dx/src/assets"
+            ],
+            "styles": ["apps/react-dx/src/styles.css"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/react-dx/src/environments/environment.ts",
+                  "with": "apps/react-dx/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react-dx:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react-dx:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/react-dx/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/react-dx"],
+          "options": {
+            "jestConfig": "apps/react-dx/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-dx-e2e": {
+      "root": "apps/react-dx-e2e",
+      "sourceRoot": "apps/react-dx-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/react-dx-e2e/cypress.json",
+            "devServerTarget": "react-dx:serve",
+            "tsConfig": "apps/react-dx-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react-dx:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/react-dx-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "react-dx"
+}
